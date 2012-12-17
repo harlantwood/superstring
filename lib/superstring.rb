@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'cgi'
 require 'digest/sha1'
 require 'active_support'
@@ -9,7 +11,10 @@ require "superstring/ext/gollum"
 
 class ::String
 
+  include ActiveSupport::Inflector
+
   LINE_ENDING = "\n"
+  MAXIMUM_SUBDOMAIN_LENGTH = 63  # This is a hard limit set by internet standards
 
   def sha1
     Digest::SHA1.hexdigest( self )
@@ -44,14 +49,14 @@ class ::String
     sentences.join($/)
   end
 
-  def slug(type = :page)
+  def slug(type = :page, minimum_subdomain_length = 8)
     case type
       when :page
         page_name_safe
       when :subdomain
-        subdomain_safe
+        padded_subdomain_safe(1)
       when :padded_subdomain
-        padded_subdomain_safe
+        padded_subdomain_safe(minimum_subdomain_length)
       else
         raise ArgumentError, "Unknown slug type #{type.inspect}"
     end
@@ -59,23 +64,32 @@ class ::String
 
   def page_name_safe(char_white_sub = '-', char_other_sub = '-')
     safer = self
-    safer = CGI.unescape safer # convert %3D to '=', %20 to space, etc
-    safer = safer.gsub(/[?&=]/, char_other_sub) # slug out standard query string chars
+    if domain.present?
+      safer = CGI.unescape safer                    # convert %3D to '=', %20 to space, etc
+      safer = safer.gsub(/[?&=]/, char_other_sub)   # slug out standard query string chars
+    end
     safer = Gollum::Page.cname(safer, char_white_sub, char_other_sub)
     safer
   end
 
-  def padded_subdomain_safe
+  def padded_subdomain_safe(minimum_subdomain_length)
+    raise ArgumentError.new("minimum_subdomain_length must be less than #{MAXIMUM_SUBDOMAIN_LENGTH}") if minimum_subdomain_length > MAXIMUM_SUBDOMAIN_LENGTH
     massaged = subdomain_safe
-    if massaged.size < MINIMUM_SUBDOMAIN_LENGTH
+    if massaged.size < minimum_subdomain_length
       massaged << '-' unless massaged.empty?
-      massaged << ( MINIMUM_SUBDOMAIN_LENGTH - massaged.size ).times.map{ (rand*10).floor.to_s }.join
+      massaged << ( minimum_subdomain_length - massaged.size ).times.map{ (rand*10).floor.to_s }.join
     end
     massaged
   end
 
   def subdomain_safe
-    gsub(/[^[[:alnum:]]-]/, '-').gsub(/^-+/, '')
+    safer = page_name_safe
+    safer = transliterate(safer)   # convert ø to o, å to a, etc
+    safer.downcase!
+    safer.gsub!(/[^a-z0-9\-]/, '-')
+    safer.gsub!(/^-+/, '')
+    safer = safer.slice(0, MAXIMUM_SUBDOMAIN_LENGTH)
+    safer
   end
 
   def domain
