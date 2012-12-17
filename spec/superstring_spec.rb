@@ -23,14 +23,9 @@ describe ::String do
       ["This file is called _Heart of the sun.wav Nov., 2012_."] }
   end
 
-  describe "#poetry" do
-    it { "Be,still:my--\n\nOh my".poetry.should ==   ["Be,still:my--\n", "\n", "Oh my\n", ] }
-    it { "Be,still:my--\n\n\nOh my".poetry.should == ["Be,still:my--\n", "\n", "Oh my\n", ] }
-  end
-
-  describe "#poem" do
-    it { "Be,still:my--\n\nOh my".poem.should ==   "Be,still:my--\n\nOh my\n" }
-    it { "Be,still:my--\n\n\nOh my".poem.should == "Be,still:my--\n\nOh my\n" }
+  describe "#sentence_poem" do
+    it {  "That that is, is.  That that is not, is not.\n\nThat is it...is it not?".sentence_poem.should ==
+      "That that is, is.\nThat that is not, is not.\nThat is it...is it not?" }
   end
 
   describe "#strip_lines!" do

@@ -40,27 +40,8 @@ class ::String
     )
   end
 
-  def poem
-    poetry.join
-  end
-
-  def poetry
-    chunks = self.scan(
-      %r{
-        (?:
-          (?:\r?\n)(?![\r\n])
-          |
-          \S[^.!?\r\n]+[.!?]+(?=[[:space:]])
-          |
-          \S[^.\r\n]+
-          |
-          [.!?]+
-        )
-      }x
-    )
-    chunks.map do |chunk|
-      "#{chunk.chomp}#{$/}"
-    end
+  def sentence_poem
+    sentences.join($/)
   end
 
   def slug(type = :page)
