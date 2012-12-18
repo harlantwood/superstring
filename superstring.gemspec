@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["code@harlantwood.net"]
   gem.description   = %q{Grant superpowers to instances of the String class}
   gem.summary       = %q{Split stings into sentences, convert to URL-friendly slugs, generate hashcodes, and more}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/harlantwood/superstring"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
