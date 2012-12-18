@@ -13,7 +13,6 @@ class ::String
 
   include ActiveSupport::Inflector
 
-  LINE_ENDING = "\n"
   MAXIMUM_SUBDOMAIN_LENGTH = 63  # This is a hard limit set by internet standards
 
   def sha1
@@ -73,7 +72,10 @@ class ::String
   end
 
   def padded_subdomain_safe(minimum_subdomain_length)
-    raise ArgumentError.new("minimum_subdomain_length must be less than #{MAXIMUM_SUBDOMAIN_LENGTH}") if minimum_subdomain_length > MAXIMUM_SUBDOMAIN_LENGTH
+    if minimum_subdomain_length > MAXIMUM_SUBDOMAIN_LENGTH
+      raise ArgumentError.new("minimum_subdomain_length must not be greater than #{MAXIMUM_SUBDOMAIN_LENGTH} (was: #{minimum_subdomain_length}")
+    end
+
     massaged = subdomain_safe
     if massaged.size < minimum_subdomain_length
       massaged << '-' unless massaged.empty?
@@ -128,6 +130,8 @@ class ::String
     gsub( /\s+/, ' ' ).strip
   end
 
+  #LINE_ENDING = "\n"
+  #
   #def break_long_lines!
   #  lines = split( LINE_ENDING )
   #  lines.map!( &:break_if_long )
