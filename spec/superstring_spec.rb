@@ -38,6 +38,14 @@ describe ::String do
     it { "\n\nfoo\nbar\n\n".strip_lines!.should == "foo\nbar" }
   end
 
+  describe "#compact_whitespace" do
+    it { "  foo   bar  ".compact_whitespace.should == "foo bar" }
+    it { "  foo \n  bar  ".compact_whitespace.should == "foo bar" }
+    it { "  foo \r  bar  ".compact_whitespace.should == "foo bar" }
+    it { "  foo \r\n  bar  ".compact_whitespace.should == "foo bar" }
+    it { "\n\nfoo\nbar\n\n".compact_whitespace.should == "foo bar" }
+  end
+
   describe "#domain" do
     it { "http://mediawiki.org".domain.should == "mediawiki.org"}
     it { "http://mediawiki.org/".domain.should == "mediawiki.org"}
