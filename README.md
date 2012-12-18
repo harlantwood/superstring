@@ -77,12 +77,12 @@ Whitespace
     "  foo \r\n  bar  ".strip_lines!
      => "foo\r\nbar"
 
-String part of collection?
---------------------------
+Check for inclusion in a given collection
+-----------------------------------------
 
     collection = ["foo", "bar"]
       => ["foo", "bar"]
-    'foo'.in? collection
+    "foo".in? collection
       => true
-    'food'.in? collection
+    "food".in? collection
       => false
