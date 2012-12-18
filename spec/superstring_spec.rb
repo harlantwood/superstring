@@ -120,4 +120,13 @@ describe ::String do
 
   end
 
+  describe "#in?" do
+    it { "foo".in?(["foo", "bar"]).should == true }
+    it { "f00".in?(["foo", "bar"]).should == false }
+    it { "foo".in?([]).should == false }
+    it { "foo".in?(nil).should == false }
+    it { "".in?([]).should == false }
+    it { "".in?(nil).should == false }
+  end
+
 end
