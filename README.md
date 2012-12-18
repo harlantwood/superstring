@@ -1,4 +1,4 @@
-SuperString
+SuperString   [![Build Status](https://travis-ci.org/harlantwood/superstring.png?branch=master)](https://travis-ci.org/harlantwood/superstring)
 ===========
 
 Grant superpowers to instances of the Ruby String class.
