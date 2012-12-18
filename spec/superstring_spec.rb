@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-require_relative '../lib/superstring'
+require File.expand_path('../lib/superstring', File.dirname(__FILE__))
 
 describe ::String do
 
