@@ -38,6 +38,29 @@ describe ::String do
     it { "\n\nfoo\nbar\n\n".strip_lines!.should == "foo\nbar" }
   end
 
+  describe "#domain" do
+    it { "http://mediawiki.org".domain.should == "mediawiki.org"}
+    it { "http://mediawiki.org/".domain.should == "mediawiki.org"}
+    it { "http://mediawiki.org/foo.html".domain.should == "mediawiki.org"}
+    it { "https://mediawiki.org/".domain.should == "mediawiki.org"}
+    it { "gopher://mediawiki.org/".domain.should == "mediawiki.org"}
+    it { "anyprotocol://mediawiki.org/".domain.should == "mediawiki.org"}
+    it { "//mediawiki.org/".domain.should == "mediawiki.org"}
+    context "subdomains" do
+      it { "http://www.mediawiki.org/".domain.should == "mediawiki.org"}
+      it { "http://dance.dance.mediawiki.org/".domain.should == "dance.dance.mediawiki.org"}
+      it { "http://dance-dance-.mediawiki.org/".domain.should == "dance-dance-.mediawiki.org"}
+      it { "http://www.dance.dance.mediawiki.org/".domain.should == "dance.dance.mediawiki.org"}
+    end
+    context "invalid URIs" do
+      it { "".domain.should == nil }
+      it { "/mediawiki.org".domain.should == nil }
+      it { "http://mediawiki.org~~~".domain.should == nil }
+      it { "http://-illegal-subdomain.mediawiki.org".domain.should == nil }
+      it { "http://-illegal-subdomain.mediawiki.org".domain.should == nil }
+    end
+  end
+
   describe "#slug" do
     context "slugs safe for file names, and (arguably) URLs" do
       it { "".slug(:page).should == "" }
