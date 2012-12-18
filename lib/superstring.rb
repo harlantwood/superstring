@@ -125,7 +125,7 @@ class ::String
   end
 
   def compact_whitespace
-    self.gsub( /\s+/, ' ' ).strip!
+    gsub( /\s+/, ' ' ).strip
   end
 
   #def break_long_lines!
