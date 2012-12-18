@@ -8,7 +8,7 @@ Split stings into sentences, convert to URL-friendly slugs, generate hashcodes, 
 Basic Usage
 -----------
 
-Install or bundle gem.
+Install or bundle gem.  Then, simply:
 
     require 'superstring'
 
@@ -32,7 +32,7 @@ Slug generation
     "Les Misérables".slug(:subdomain)
     => "les-miserables"
 
-**Slugs safe for subdomains, padded to meet a given minimum length**
+**Slugs safe for subdomains, padded with random digits to meet a given minimum length**
 
     "Les Misérables".slug(:padded_subdomain, 20)
      => "les-miserables-62858"
@@ -72,17 +72,17 @@ SHA1 - SHA512 methods
 Whitespace
 ----------
 
-"  foo \r\n  bar  ".compact_whitespace
- => "foo bar"
-"  foo \r\n  bar  ".strip_lines!
- => "foo\r\nbar"
+    "  foo \r\n  bar  ".compact_whitespace
+     => "foo bar"
+    "  foo \r\n  bar  ".strip_lines!
+     => "foo\r\nbar"
 
 String part of collection?
 --------------------------
 
-collection = ["foo", "bar"]
- => ["foo", "bar"]
-'foo'.in? collection
- => true
-'food'.in? collection
- => false
+    collection = ["foo", "bar"]
+      => ["foo", "bar"]
+    'foo'.in? collection
+      => true
+    'food'.in? collection
+      => false
