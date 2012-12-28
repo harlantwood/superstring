@@ -137,4 +137,11 @@ describe ::String do
     it { "".in?(nil).should == false }
   end
 
+  # Note: we don't define this method; it's from the shellescape standard ruby library
+  describe "#shellescape" do
+    it {"Nahko-Bear-(Medicine-for-the-People)-ღ-Aloha-Ke-Akua-ღ".shellescape.should ==
+      "Nahko-Bear-\\(Medicine-for-the-People\\)-\\ღ-Aloha-Ke-Akua-\\ღ" }
+  end
+
+
 end
