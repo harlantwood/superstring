@@ -46,27 +46,30 @@ describe ::String do
     it { "\n\nfoo\nbar\n\n".compact_whitespace.should == "foo bar" }
   end
 
-  describe "#domain" do
-    it { "http://mediawiki.org".domain.should == "mediawiki.org"}
-    it { "http://mediawiki.org/".domain.should == "mediawiki.org"}
-    it { "http://mediawiki.org/foo.html".domain.should == "mediawiki.org"}
-    it { "https://mediawiki.org/".domain.should == "mediawiki.org"}
-    it { "gopher://mediawiki.org/".domain.should == "mediawiki.org"}
-    it { "anyprotocol://mediawiki.org/".domain.should == "mediawiki.org"}
-    it { "//mediawiki.org/".domain.should == "mediawiki.org"}
+  describe "#host" do
+    it { "http://mediawiki.org".host.should == "mediawiki.org"}
+    it { "http://mediawiki.org/".host.should == "mediawiki.org"}
+    it { "http://mediawiki.org/foo.html".host.should == "mediawiki.org"}
+    it { "https://mediawiki.org/".host.should == "mediawiki.org"}
+    it { "gopher://mediawiki.org/".host.should == "mediawiki.org"}
+    it { "anyprotocol://mediawiki.org/".host.should == "mediawiki.org"}
+    it { "//mediawiki.org/".host.should == "mediawiki.org"}
     context "subdomains" do
-      it { "http://www.mediawiki.org/".domain.should == "mediawiki.org"}
-      it { "http://dance.dance.mediawiki.org/".domain.should == "dance.dance.mediawiki.org"}
-      it { "http://dance-dance-.mediawiki.org/".domain.should == "dance-dance-.mediawiki.org"}
-      it { "http://www.dance.dance.mediawiki.org/".domain.should == "dance.dance.mediawiki.org"}
+      it { "http://www.mediawiki.org/".host.should == "www.mediawiki.org"}
+      it { "http://dance.dance.mediawiki.org/".host.should == "dance.dance.mediawiki.org"}
+      it { "http://dance-dance-.mediawiki.org/".host.should == "dance-dance-.mediawiki.org"}
+      it { "http://www.dance.dance.mediawiki.org/".host.should == "www.dance.dance.mediawiki.org"}
     end
     context "invalid URIs" do
-      it { "".domain.should == nil }
-      it { "/mediawiki.org".domain.should == nil }
-      it { "http://mediawiki.org~~~".domain.should == nil }
-      it { "http://-illegal-subdomain.mediawiki.org".domain.should == nil }
-      it { "http://-illegal-subdomain.mediawiki.org".domain.should == nil }
+      it { "".host.should == nil }
+      it { "/mediawiki.org".host.should == nil }
+      it { "http://mediawiki.org~~~".host.should == nil }
     end
+  end
+
+  describe "#host_without_www, #domain" do
+    it { "http://www.mediawiki.org/".host_without_www.should == "mediawiki.org"}
+    it { "http://www.mediawiki.org/".domain.should == "mediawiki.org"}
   end
 
   describe "#slug" do

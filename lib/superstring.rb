@@ -94,23 +94,20 @@ class ::String
     safer
   end
 
-  DOMAIN_SEGMENT_PATTERN = "[a-z0-9][a-z0-9-]+"
-  URI_PATTERN =
-    %r{
-      ^
-      \s*                                   # optional leading whitespace
-      (?:[a-z]+:)?                          # optional protocol, eg http:
-      //                                    # required //
-      (?:www\.)?                            # 'www.' is ignored
-      (
-        #{DOMAIN_SEGMENT_PATTERN}           # first domain segment
-        (?:\.#{DOMAIN_SEGMENT_PATTERN})+    # one or more additional domain segments
-      )
-      (?:/|$)                               # followed by a '/' or end of line
-    }ix
-
   def domain
-    match(URI_PATTERN).to_a[1]
+    host_without_www
+  end
+
+  def host_without_www
+    host.gsub(/^www./, '') if host
+  end
+
+  def host
+    uri.host if uri
+  end
+
+  def uri
+    URI.parse self rescue nil
   end
 
   def strip_lines!
