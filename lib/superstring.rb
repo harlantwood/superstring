@@ -4,6 +4,7 @@ require 'cgi'
 require 'digest/sha1'
 require 'active_support'
 require 'active_support/core_ext/string'
+require "addressable/uri"
 require "superstring/version"
 require "superstring/ext/gollum"
 
@@ -121,7 +122,7 @@ class ::String
   end
 
   def uri
-    URI.parse self rescue nil
+    Addressable::URI.parse self rescue nil
   end
 
   def strip_lines!

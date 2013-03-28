@@ -88,7 +88,7 @@ describe ::String do
     context "invalid URIs" do
       it { "".host.should == nil }
       it { "/mediawiki.org".host.should == nil }
-      it { "http://mediawiki.org~~~".host.should == nil }
+      it { "http:/mediawiki.org".host.should == nil }
     end
   end
 
