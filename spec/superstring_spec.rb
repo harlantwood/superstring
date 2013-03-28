@@ -9,19 +9,14 @@ describe ::String do
   end
 
   describe "#sha384" do      
-    context "no arguments" do
-      it { "x".sha384.should =~ /^[0-9a-f]{96}$/ }
-    end
-    
-    context "supported base passed in as argument" do
-      it { "x".sha384(:base16).should =~ /^[0-9a-f]{96}$/ }
-      it { "x".sha384(:base64).should =~ /^[+\/0-9a-zA-Z]{64}$/ }
-      it { "x".sha384(:base64url).should =~ /^[-_0-9a-zA-Z]{64}$/ }
-    end
+    it { "".sha384.should ==             '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b' }
+    it { "".sha384(:base16).should ==    '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b' }
+    it { "".sha384(:base64).should ==    'OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb' }
+    it { "".sha384(:base64url).should == 'OLBgp1GsljhM2TJ-sbHjaiH9txEUvgdDTAzHv2P24donTt6_529l-9Ua0vFImLlb' }
     
     context "unsupported base passed in as argument" do
-      it { lambda { "x".sha384(nil) }.should raise_error(ArgumentError, "Unexpected encoding: nil") }
-      it { lambda { "x".sha384(:foo) }.should raise_error(ArgumentError, "Unexpected encoding: :foo") }
+      it { lambda { "".sha384(nil) }.should raise_error(ArgumentError, "Unexpected encoding: nil") }
+      it { lambda { "".sha384(:foo) }.should raise_error(ArgumentError, "Unexpected encoding: :foo") }
     end
   end
 
