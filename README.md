@@ -5,6 +5,14 @@ Grant superpowers to instances of the Ruby String class.
 
 Split stings into sentences, convert to URL-friendly slugs, generate hashcodes, and more...
 
+Supported Ruby versions
+-----------------------
+- 1.9.2
+- 1.9.3
+- 2.0.0 (experimental)
+
+Note that ruby 1.8.x and earlier are _not_ supported.                                                 
+
 Basic Usage
 -----------
 
