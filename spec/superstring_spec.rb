@@ -8,8 +8,21 @@ describe ::String do
     it { "x".sha1.should =~ /^[0-9a-f]{40}$/ }
   end
 
-  describe "#sha384" do
-    it { "x".sha384.should =~ /^[0-9a-f]{96}$/ }
+  describe "#sha384" do      
+    context "no arguments" do
+      it { "x".sha384.should =~ /^[0-9a-f]{96}$/ }
+    end
+    
+    context "supported base passed in as argument" do
+      it { "x".sha384(:base16).should =~ /^[0-9a-f]{96}$/ }
+      it { "x".sha384(:base64).should =~ /^[+\/0-9a-zA-Z]{64}$/ }
+      it { "x".sha384(:base64url).should =~ /^[-_0-9a-zA-Z]{64}$/ }
+    end
+    
+    context "unsupported base passed in as argument" do
+      it { lambda { "x".sha384(nil) }.should raise_error(ArgumentError, "Unexpected encoding: nil") }
+      it { lambda { "x".sha384(:foo) }.should raise_error(ArgumentError, "Unexpected encoding: :foo") }
+    end
   end
 
   describe "#sha512" do

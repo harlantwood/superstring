@@ -23,8 +23,17 @@ class ::String
     Digest::SHA256.hexdigest( self )
   end
 
-  def sha384
-    Digest::SHA384.hexdigest( self )
+  def sha384(encoding = :base16)
+    case encoding
+    when :base16
+      Digest::SHA384.hexdigest( self )
+    when :base64
+      Digest::SHA384.base64digest( self )
+    when :base64url
+      Digest::SHA384.base64digest( self ).tr("+/", "-_")   # URL safe base 64 encoding, as in http://tools.ietf.org/html/rfc4648#section-5
+    else
+      raise ArgumentError, "Unexpected encoding: #{encoding.inspect}"
+    end    
   end
 
   def sha512
