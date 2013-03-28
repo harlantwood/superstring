@@ -15,30 +15,35 @@ class ::String
 
   MAXIMUM_SUBDOMAIN_LENGTH = 63  # This is a hard limit set by internet standards
 
-  def sha1
-    Digest::SHA1.hexdigest( self )
+  def sha1(encoding = :base16)
+    sha_digest Digest::SHA1, encoding
   end
 
-  def sha256
-    Digest::SHA256.hexdigest( self )
+  def sha256(encoding = :base16)
+    sha_digest Digest::SHA256, encoding
   end
 
   def sha384(encoding = :base16)
+    sha_digest Digest::SHA384, encoding
+  end
+
+  def sha512(encoding = :base16)
+    sha_digest Digest::SHA512, encoding
+  end
+
+  def sha_digest(digest_class, encoding)
     case encoding
     when :base16
-      Digest::SHA384.hexdigest( self )
+      digest_class.hexdigest( self )
     when :base64
-      Digest::SHA384.base64digest( self )
+      digest_class.base64digest( self )
     when :base64url
-      Digest::SHA384.base64digest( self ).tr("+/", "-_")   # URL safe base 64 encoding, as in http://tools.ietf.org/html/rfc4648#section-5
+      digest_class.base64digest( self ).tr("+/", "-_")   # URL safe base 64 encoding: see http://tools.ietf.org/html/rfc4648#section-5
     else
       raise ArgumentError, "Unexpected encoding: #{encoding.inspect}"
     end    
-  end
-
-  def sha512
-    Digest::SHA512.hexdigest( self )
-  end
+  end 
+  private :sha_digest
 
   def sentences
     self.scan(
