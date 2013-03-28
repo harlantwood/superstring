@@ -35,12 +35,11 @@ class ::String
   def sha_digest(digest_class, encoding)
     case encoding
     when :base16
-      digest_class.hexdigest( self )
+      digest_class.hexdigest(self)
     when :base64                       
-      # in ruby 1.9+, we can use digest_class.base64digest -- we do it manually to work with ruby 1.8.7:
-      [digest_class.digest(self)].pack('m0')
+      digest_class.base64digest(self)
     when :base64url
-      sha_digest(digest_class, :base64).tr("+/", "-_")   # URL safe base 64 encoding: see http://tools.ietf.org/html/rfc4648#section-5
+      digest_class.base64digest(self).tr("+/", "-_")   # URL safe base 64 encoding: see http://tools.ietf.org/html/rfc4648#section-5
     else
       raise ArgumentError, "Unexpected encoding: #{encoding.inspect}"
     end    
