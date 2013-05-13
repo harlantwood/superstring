@@ -7,6 +7,7 @@ describe ::String do
   describe "#sha1" do
     it { "".sha1.should ==             'da39a3ee5e6b4b0d3255bfef95601890afd80709' }
     it { "".sha1(:base16).should ==    'da39a3ee5e6b4b0d3255bfef95601890afd80709' }
+    it { "".sha1(:base36).should ==    'phoiac9h4m842xq45sp7s6u21eteeq1' }
     it { "".sha1(:base64).should ==    '2jmj7l5rSw0yVb/vlWAYkK/YBwk=' }
     it { "".sha1(:base64url).should == '2jmj7l5rSw0yVb_vlWAYkK_YBwk=' }
   end
@@ -14,6 +15,7 @@ describe ::String do
   describe "#sha256" do      
     it { "".sha256.should ==             'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' }
     it { "".sha256(:base16).should ==    'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855' }
+    it { "".sha256(:base36).should ==    '5oaq0bjhj6un82wg98mgigso5q7qlhc63je4gw7ivixqqhkd3p' }
     it { "".sha256(:base64).should ==    '47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' }
     it { "".sha256(:base64url).should == '47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU=' }
   end  
@@ -21,6 +23,7 @@ describe ::String do
   describe "#sha384" do      
     it { "".sha384.should ==             '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b' }
     it { "".sha384(:base16).should ==    '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b' }
+    it { "".sha384(:base36).should ==    'lewbsyywv1fh5u2xjy80r9yiuvpic7rr0c3x8ecl00di084cbyvfb1db5owmkn8yq8upmrvq6z' }
     it { "".sha384(:base64).should ==    'OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb' }
     it { "".sha384(:base64url).should == 'OLBgp1GsljhM2TJ-sbHjaiH9txEUvgdDTAzHv2P24donTt6_529l-9Ua0vFImLlb' }
   end
@@ -28,6 +31,7 @@ describe ::String do
   describe "#sha512" do
     it { "".sha512.should ==             'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' }
     it { "".sha512(:base16).should ==    'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e' }
+    it { "".sha512(:base36).should ==    'x00uk0rsucd43bq2n1dxacow63itq8d5nozjp9rel1lrifok7mu11lgpu66r4ddg3yb50ic4lj5wd7wygmpusxbnjcyhyr4j70e' }
     it { "".sha512(:base64).should ==    'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg==' }
     it { "".sha512(:base64url).should == 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg_SpIdNs6c5H0NE8XYXysP-DGNKHfuwvY7kxvUdBeoGlODJ6-SfaPg==' }
   end

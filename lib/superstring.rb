@@ -36,6 +36,8 @@ class ::String
     case encoding
     when :base16
       digest_class.hexdigest(self)
+    when :base36
+      digest_class.hexdigest(self).to_i(16).to_s(36)
     when :base64                       
       digest_class.base64digest(self)
     when :base64url
